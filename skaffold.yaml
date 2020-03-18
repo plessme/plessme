@@ -8,9 +8,14 @@ build:
   artifacts:
   - image: jcr.bongladesch.com/docker-dev/pless-me
     context: .
-    docker:
+#    docker:
+#      dockerfile: src/main/docker/Dockerfile
+    kaniko:
       dockerfile: src/main/docker/Dockerfile
+  cluster:
+    namespace: build
+    pullSecretName: regcred-dev
 deploy:
   kubectl:
     manifests:
-    - src/main/kubernetes/deployment.yaml
+    - src/main/kubernetes/*.yaml
