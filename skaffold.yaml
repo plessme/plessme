@@ -1,0 +1,16 @@
+apiVersion: skaffold/v2alpha4
+kind: Config
+metadata:
+  name: pless-me
+build:
+  tagPolicy:
+    gitCommit: {}
+  artifacts:
+  - image: jcr.bongladesch.com/docker-dev/pless-me
+    context: .
+    docker:
+      dockerfile: src/main/docker/Dockerfile
+deploy:
+  kubectl:
+    manifests:
+    - src/main/kubernetes/deployment.yaml

@@ -1,0 +1,32 @@
+package com.bongladesch.quarkus.adapters.database.postgres;
+
+import javax.persistence.Entity;
+
+import com.bongladesch.quarkus.usecases.model.UserData;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
+@Entity
+public class PostgresUserAccount extends PanacheEntity {
+    public String id;
+    public String email;
+    public String firstName;
+    public String lastName;
+
+    public PostgresUserAccount(UserData userData) {
+        this.id = userData.getId();
+        this.email = userData.getEmail();
+        this.firstName = userData.getFirstName();
+        this.lastName = userData.getLastName();
+    }
+    
+    public static PostgresUserAccount findByEmail(String email){
+        return find("email", email).firstResult();
+    }
+
+    public UserData toUserData() {
+        UserData userData = new UserData(this.email, null, this.firstName, this.lastName);
+        userData.setId(this.id);
+        return userData;
+    }
+}

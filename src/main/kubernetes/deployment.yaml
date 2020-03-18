@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: plessme
+  name: plessme
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plessme
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: plessme
+    spec:
+      containers:
+      - image: jcr.bongladesch.com/docker/pless-me:0.1.0-SNAPSHOT
+        name: pless-me
+        resources:
+          limits:
+            cpu: "1"
+            memory: 512Mi
+          requests:
+            cpu: "0.1"
+            memory: 124Mi
