@@ -19,7 +19,7 @@ spec:
         app: plessme
     spec:
       containers:
-      - image: jcr.bongladesch.com/docker-dev/pless-me
+      - image: ingress-nginx-svc.kube-system.svc.bongladesch.com/docker-dev/pless-me
         name: pless-me
         resources:
           limits:

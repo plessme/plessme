@@ -6,12 +6,14 @@ build:
   tagPolicy:
     gitCommit: {}
   artifacts:
-  - image: jcr.bongladesch.com/docker-dev/pless-me
+#  - image: jcr.bongladesch.com/docker-dev/pless-me
+  - image: ingress-nginx-svc.kube-system.svc.bongladesch.com/docker-dev/pless-me
     context: .
 #    docker:
 #      dockerfile: src/main/docker/Dockerfile
     kaniko:
       dockerfile: src/main/docker/Dockerfile
+      skipTLS: true
   cluster:
     namespace: build
     pullSecretName: regcred-dev
