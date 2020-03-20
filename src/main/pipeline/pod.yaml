@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    repository: plessme
+spec:
+  containers:
+  - name: buildpipeline
+    image: jcr.bongladesch.com/docker/stack/buildpipeline:0.1.0
+    command:
+    - cat
+    tty: true
