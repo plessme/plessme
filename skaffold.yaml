@@ -13,7 +13,7 @@ build:
 #      dockerfile: src/main/docker/Dockerfile
     kaniko:
       dockerfile: src/main/docker/Dockerfile
-      skipTLS: true
+      skipTLS: True
   cluster:
     namespace: build
     pullSecretName: regcred-dev
