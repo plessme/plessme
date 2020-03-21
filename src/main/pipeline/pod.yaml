@@ -4,6 +4,7 @@ metadata:
   labels:
     repository: plessme
 spec:
+  serviceAccountName: jenkins-sa
   containers:
   - name: buildpipeline
     image: jcr.bongladesch.com/docker/stack/buildpipeline:0.1.0
