@@ -19,17 +19,10 @@ pipeline {
         }
       }
     }
-    stage('Build & Push Docker') {
+    stage('Build & Push & Deploy') {
       steps {
         container('buildpipeline') {
-          sh 'skaffold build'
-        }
-      }
-    }
-    stage('Deploy') {
-      steps {
-        container('buildpipeline') {
-          sh 'skaffold deploy'
+          sh 'skaffold run'
         }
       }
     }
