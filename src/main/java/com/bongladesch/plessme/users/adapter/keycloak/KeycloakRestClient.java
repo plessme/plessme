@@ -25,10 +25,9 @@ public interface KeycloakRestClient {
      * Request oidc access token for the realm
      * administrator of Keycloak realm.
      * @param realm Realm name of Keycloak realm
-     * @param username User name of realm administrator
-     * @param password Password of realm administrator
-     * @param grantType Set grant_type to 'password'
+     * @param grantType Set grant_type to 'client_secret'
      * @param clientId Client id of Keycloak realm
+     * @param clientSecret Client secret for the keycloak client
      * @return A keycloak token response containing the access token.
      */
     @POST
@@ -37,10 +36,9 @@ public interface KeycloakRestClient {
     @Produces("application/json")
     KeycloakTokenResponse getToken(
         @PathParam("realm") String realm,
-        @FormParam("username") String username,
-        @FormParam("password") String password,
         @FormParam("grant_type") String grantType,
-        @FormParam("client_id") String clientId);
+        @FormParam("client_id") String clientId,
+        @FormParam("client_secret") String clientSecret);
     
     /**
      * Create a Keycloak user from Keycloak user JSON API object.

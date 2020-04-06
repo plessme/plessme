@@ -20,26 +20,23 @@ public class KeycloakIdentityProvider implements IIdentityProvider {
 
     /**
      * Keycloak API rest client implementation is injected by CDI.
+     * Class fields must be package private due to implementation quarkus.
      */
     @Inject
     @RestClient
     KeycloakRestClient keycloakRestClient;
 
     @Inject
-    @ConfigProperty(name = "keycloak.plessme.admin.user") 
-    String adminUser;
+    @ConfigProperty(name = "plessme.keycloak.realm")
+    String realm;
 
     @Inject
-    @ConfigProperty(name = "keycloak.plessme.admin.password") 
-    String adminPassword;
-
-    @Inject
-    @ConfigProperty(name = "keycloak.plessme.client.id") 
+    @ConfigProperty(name = "plessme.keycloak.client.id") 
     String clientId;
 
     @Inject
-    @ConfigProperty(name = "keycloak.plessme.realm")
-    String realm;
+    @ConfigProperty(name = "plessme.keycloak.client.secret")
+    String clientSecret;
 
     @Inject
     ILogger logger;
@@ -51,11 +48,11 @@ public class KeycloakIdentityProvider implements IIdentityProvider {
      */
     @Override
     public User createUser(User user) {
-        logger.info("Request OIDC access token from Keycloak to create user with email: " + user.getEmail());
-        KeycloakTokenResponse tokenResponse = keycloakRestClient.getToken(realm, adminUser, adminPassword, "password", clientId);
-        logger.info("Create user from user data in Keycloak");
+        logger.debug("Request OIDC access token from Keycloak to create user with email: " + user.getEmail());
+        KeycloakTokenResponse tokenResponse = keycloakRestClient.getToken(realm, "client_credentials", clientId, clientSecret);
+        logger.debug("Create user from user data in Keycloak");
         keycloakRestClient.createUser(realm, createAuthHeader(tokenResponse), new KeycloakUserRepresentation(user));
-        logger.info("Request new users ID and creation timestamp from Keycloak and add to new user object for return");
+        logger.debug("Request new users ID and creation timestamp from Keycloak and add to new user object for return");
         KeycloakUserRepresentation keycloakUser = keycloakRestClient.getUserByEmail(realm, createAuthHeader(tokenResponse), user.getEmail())[0];
         UserBuilder builder = new UserBuilder().
             id(keycloakUser.id).

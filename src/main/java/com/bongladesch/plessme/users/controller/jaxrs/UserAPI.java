@@ -1,9 +1,7 @@
 package com.bongladesch.plessme.users.controller.jaxrs;
 
-import java.util.HashMap;
-
-//import javax.annotation.security.PermitAll;
-//import javax.annotation.security.RolesAllowed;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -23,9 +21,9 @@ import com.bongladesch.plessme.users.usecase.UCreateUser;
 import com.bongladesch.plessme.users.usecase.UserAlreadyExistsException;
 import com.bongladesch.plessme.users.usecase.UserValidationException;
 
-//import org.jboss.resteasy.annotations.cache.NoCache;
+import org.jboss.resteasy.annotations.cache.NoCache;
 
-//import io.quarkus.security.identity.SecurityIdentity;
+import io.quarkus.security.identity.SecurityIdentity;
 
 /**
  * UsersAPI implements a REST API with JAX-RS to address
@@ -36,7 +34,7 @@ import com.bongladesch.plessme.users.usecase.UserValidationException;
 @Path("/users")
 public class UserAPI {
 
-//    private SecurityIdentity identity;
+    private SecurityIdentity identity;
     private ILogger logger;
     private IUserRepository userRepository;
     private IIdentityProvider identityProvider;
@@ -52,12 +50,12 @@ public class UserAPI {
      */
     @Inject
     public UserAPI(
-//        SecurityIdentity identity,
+        SecurityIdentity identity,
         ILogger logger,
         IUserRepository userRepository,
         IIdentityProvider identityProvider,
         IMessageSender messageSender) {
-//        this.identity = identity;
+        this.identity = identity;
         this.logger = logger;
         this.userRepository = userRepository;
         this.identityProvider = identityProvider;
@@ -72,8 +70,8 @@ public class UserAPI {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-//    @PermitAll
-//    @NoCache
+    @PermitAll
+    @NoCache
     public Response createUser(UserJSON userJSON) {
         // Inject dependencies to the usecase on creation
         UCreateUser createUserAccount = new UCreateUser(
@@ -100,14 +98,13 @@ public class UserAPI {
                 return Response.status(400).build();
             }
         }
-        return Response.ok(new HashMap<String, Object>().put("id", user.getId())).build();
-        //return Response.ok("{\"id\":\"" + user.getId() + "\"}").build();
+        return Response.ok("{\"id\":\"" + user.getId() + "\"}").build();
     }
 
     @GET
-//    @RolesAllowed("user")
+    @RolesAllowed("user")
     @Produces(MediaType.APPLICATION_JSON)
-//    @NoCache
+    @NoCache
     public Response hello() {
         //Principal principal = identity.getPrincipal();
         // if(principal instanceof KeycloakPrincipal) {
@@ -119,7 +116,6 @@ public class UserAPI {
         // }
         //String idToken = principal.getKeycloakSecurityContext().getIdTokenString();
         //logger.info("Keycloak ID: " + idToken);
-        //return Response.ok("{\"Hello\":\"" + identity.getPrincipal().getName() + "\"}").build();
-        return Response.ok().build();
+        return Response.ok("{\"hello\":\"" + identity.getPrincipal().getName() + "\"}").build();
     }
 }
