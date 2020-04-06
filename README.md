@@ -1,13 +1,14 @@
-# getting-started project
+# plessme backend implementation in Java Quarkus
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/> .
 
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
-```
+
+```bash
 ./gradlew quarkusDev
 ```
 
@@ -20,7 +21,8 @@ Be aware that it’s not an _über-jar_ as the dependencies are copied into the 
 The application is now runnable using `java -jar build/getting-started-0.1.0-SNAPSHOT-runner.jar`.
 
 If you want to build an _über-jar_, just add the `--uber-jar` option to the command line:
-```
+
+```bash
 ./gradlew quarkusBuild --uber-jar
 ```
 
@@ -32,4 +34,4 @@ Or you can use Docker to build the native executable using: `./gradlew buildNati
 
 You can then execute your binary: `./build/getting-started-0.1.0-SNAPSHOT-runner`
 
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/gradle-tooling#building-a-native-executable .
+If you want to learn more about building native executables, please consult <https://quarkus.io/guides/gradle-tooling#building-a-native-executable> .

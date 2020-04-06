@@ -15,6 +15,7 @@ nb-configuration.xml
 
 # Visual Studio Code
 .vscode/
+.VSCodeCounter
 
 # OSX
 .DS_Store

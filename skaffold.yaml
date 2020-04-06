@@ -1,23 +1,26 @@
 apiVersion: skaffold/v2alpha4
 kind: Config
 metadata:
-  name: pless-me
+  name: plessme-backend
 build:
   tagPolicy:
     gitCommit: {}
   artifacts:
-#  - image: jcr.bongladesch.com/docker-dev/pless-me
-  - image: ingress-nginx-svc.kube-system.svc.bongladesch.com/docker-dev/pless-me
+  - image: jcr.bongladesch.com/docker-dev/plessme
     context: .
-#    docker:
-#      dockerfile: src/main/docker/Dockerfile
-    kaniko:
-      dockerfile: src/main/docker/Dockerfile
-      skipTLS: True
-  cluster:
-    namespace: build
-    pullSecretName: regcred-dev
+    docker:
+      dockerfile: src/main/docker/Dockerfile.dev
+    sync:
+      infer:
+      - 'build.gradle'
+      - 'settings.gradle'
+      - 'gradle.properties'
+      - 'src/**/*.java'
+      - 'src/**/*.properties'
 deploy:
   kubectl:
     manifests:
-    - src/main/kubernetes/*.yaml
+    - src/main/kubernetes/backend/*.yaml
+#    - src/main/kubernetes/postgres/*.yaml
+#    - src/main/kubernetes/keycloak/*.yaml
+#    - src/main/kubernetes/mongo/*.yaml
