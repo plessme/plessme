@@ -11,6 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.bongladesch.plessme.common.usecase.IGenerator;
 import com.bongladesch.plessme.common.usecase.ILogger;
 import com.bongladesch.plessme.users.entity.User;
 import com.bongladesch.plessme.users.entity.User.UserBuilder;
@@ -36,6 +37,7 @@ public class UserAPI {
 
     private SecurityIdentity identity;
     private ILogger logger;
+    private IGenerator generator;
     private IUserRepository userRepository;
     private IIdentityProvider identityProvider;
     private IMessageSender messageSender;
@@ -44,6 +46,7 @@ public class UserAPI {
      * Constructor for CDI.
      * @param identity request identity
      * @param logger logger used by the API and usecases
+     * @param generator generator to create UUID etc.
      * @param userRepository user repository dependency
      * @param identityProvider identity provider dependency
      * @param messageSender messaging dependency
@@ -52,11 +55,13 @@ public class UserAPI {
     public UserAPI(
         SecurityIdentity identity,
         ILogger logger,
+        IGenerator generator,
         IUserRepository userRepository,
         IIdentityProvider identityProvider,
         IMessageSender messageSender) {
         this.identity = identity;
         this.logger = logger;
+        this.generator = generator;
         this.userRepository = userRepository;
         this.identityProvider = identityProvider;
         this.messageSender = messageSender;
@@ -75,8 +80,9 @@ public class UserAPI {
     public Response createUser(UserJSON userJSON) {
         // Inject dependencies to the usecase on creation
         UCreateUser createUserAccount = new UCreateUser(
-            userRepository,
             logger,
+            generator,
+            userRepository,
             identityProvider,
             messageSender
         );
@@ -116,6 +122,7 @@ public class UserAPI {
         // }
         //String idToken = principal.getKeycloakSecurityContext().getIdTokenString();
         //logger.info("Keycloak ID: " + idToken);
+        logger.info("Attributes size: " + identity.getAttributes().size());
         return Response.ok("{\"hello\":\"" + identity.getPrincipal().getName() + "\"}").build();
     }
 }

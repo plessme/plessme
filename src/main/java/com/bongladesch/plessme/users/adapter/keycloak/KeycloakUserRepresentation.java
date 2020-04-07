@@ -1,7 +1,9 @@
 package com.bongladesch.plessme.users.adapter.keycloak;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import com.bongladesch.plessme.users.entity.User;
 
@@ -21,6 +23,7 @@ public class KeycloakUserRepresentation {
     public String email;
     public List<KeycloakCredentialRepresentation> credentials;
     public List<String> groups;
+    public Map<String,List<String>>	attributes;
 
     /**
      * Default constructor for JSON deserialization.
@@ -29,9 +32,11 @@ public class KeycloakUserRepresentation {
 
     /**
      * Constructor for creation of KeycloakUserRespository from user data.
+     * The users ID is added as an attribute.
+     * The user is added to the group "users" per default.
      * @param user user object from application logic
      */
-    public KeycloakUserRepresentation(User user) {
+    public KeycloakUserRepresentation(final User user) {
         this.username = user.getEmail();
         this.enabled = true;
         this.emailVerified = false;
@@ -42,5 +47,9 @@ public class KeycloakUserRepresentation {
         credentials.add(new KeycloakCredentialRepresentation(user.getPassword()));
         this.groups = new LinkedList<String>();
         groups.add("users");
+        attributes = new HashMap<String, List<String>>();
+        List<String> id = new LinkedList<String>();
+        id.add(user.getId());
+        attributes.put("id", id);
     }
 }

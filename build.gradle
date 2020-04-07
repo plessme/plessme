@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'io.quarkus'
-    //id 'com.cosminpolifronie.gradle.plantuml' version '1.6.0'
+    id 'com.cosminpolifronie.gradle.plantuml' version '1.6.0'
 }
 
 repositories {
@@ -47,7 +47,7 @@ javadoc {
     options.addStringOption "failOnCyclicPackageDependencies", "true"
 }
 
-// plantUml {
-//     render input: 'docs/diagrams/src/usecase.puml', output: 'docs/diagrams/out/usecase.png', format: 'png', withMetadata: false
-//     render input: 'docs/diagrams/src/scenario-uploadDocument.puml', output: 'docs/diagrams/out/scenario-uploadDocument.png', format: 'png', withMetadata: false
-// }
+plantUml {
+    render input: 'docs/diagrams/src/usecase.puml', output: 'docs/diagrams/out/usecase.png', format: 'png', withMetadata: false
+    render input: 'docs/diagrams/src/scenario-uploadDocument.puml', output: 'docs/diagrams/out/scenario-uploadDocument.png', format: 'png', withMetadata: false
+}

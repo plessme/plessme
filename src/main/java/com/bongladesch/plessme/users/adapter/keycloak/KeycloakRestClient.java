@@ -57,12 +57,18 @@ public interface KeycloakRestClient {
         KeycloakUserRepresentation userRepresentation);
     
     /**
+     * ************************************************************
+     * DEPRECATED
+     * This method was implemented for a usecase
+     * and is not necessary anymore. But it may be necessary later.
+     * ************************************************************
      * Get a created Keycloak user by email address.
      * @param realm Realm name of Keycloak realm
      * @param auth Bearer token for OIDC authorization
      * @param email Email address of the Keycloak user
      * @return A list of Keycloak user JSON API objects with matching email (1).
      */
+    @Deprecated
     @GET
     @Path("admin/realms/{realm}/users")
     @Consumes("application/json")

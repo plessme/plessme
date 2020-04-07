@@ -1,4 +1,4 @@
-package com.bongladesch.plessme.documents.core;
+package com.bongladesch.plessme.documents.entity;
 
 import java.util.Collection;
 import java.util.Date;
